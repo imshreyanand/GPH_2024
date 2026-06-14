@@ -153,133 +153,141 @@ export default function Chatbot() {
 
   // Render the chat interface
   return (
-    <div className="min-h-screen flex flex-col bg-gray-900">
-      <div className="flex-grow flex flex-col items-center justify-center p-6">
-        <div className="w-full max-w-4xl p-6 bg-gray-800 shadow-xl rounded-lg flex flex-col border border-gray-700">
-          <h2 className="text-3xl font-semibold mb-6 text-center text-white">
-            Police Assistant
-          </h2>
-
-          {/* Language selection dropdown */}
-          <div className="mb-4">
-            <label className="text-white font-semibold">
-              Select Language:{" "}
-            </label>
-            <select
-              value={selectedLanguage}
-              onChange={(e) => setSelectedLanguage(e.target.value)}
-              className="ml-2 p-2 bg-gray-700 text-white rounded-lg border border-gray-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="Kannada">Kannada</option>
-              <option value="Tamil">Tamil</option>
-              <option value="Telugu">Telugu</option>
-              <option value="Malayalam">Malayalam</option>
-              <option value="Bodo">Bodo</option>
-              <option value="English">English</option>
-              <option value="Meitei (Manipuri)">Meitei (Manipuri)</option>
-              <option value="Odia">Odia</option>
-              <option value="Marathi">Marathi</option>
-              <option value="Punjabi">Punjabi</option>
-              <option value="Gujarati">Gujarati</option>
-              <option value="Bengali">Bengali</option>
-              <option value="Hindi">Hindi</option>
-              <option value="Assamese">Assamese</option>
-              <option value="Rajasthani">Rajasthani</option>
-              <option value="Konkani">Konkani</option>
-            </select>
+    <div className="min-h-screen flex flex-col bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-slate-900 via-purple-900 to-slate-900 text-white font-sans">
+      <div className="flex-grow flex flex-col items-center justify-center p-4 sm:p-8">
+        <div className="w-full max-w-5xl h-[85vh] p-6 sm:p-8 bg-white/10 backdrop-blur-2xl shadow-2xl rounded-3xl flex flex-col border border-white/20 relative overflow-hidden">
+          
+          {/* Header Section */}
+          <div className="flex flex-col sm:flex-row justify-between items-center mb-6 z-10 pb-4 border-b border-white/10">
+            <div>
+              <h2 className="text-3xl sm:text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-400 tracking-tight">
+                Police Assistant
+              </h2>
+              <p className="text-sm text-gray-400 mt-1">AI-powered multilingual support</p>
+            </div>
+            
+            {/* Language selection */}
+            <div className="mt-4 sm:mt-0 flex items-center bg-white/5 rounded-xl border border-white/10 p-1 backdrop-blur-md">
+              <div className="px-3 text-gray-300 font-medium text-sm">
+                <svg className="w-5 h-5 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M3 5h12M9 3v2m1.048 9.5A18.022 18.022 0 016.412 9m6.088 9h7M11 21l5-10 5 10M12.751 5C11.783 10.77 8.07 15.61 3 18.129"></path></svg>
+              </div>
+              <select
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value)}
+                className="bg-transparent text-white font-medium text-sm appearance-none focus:outline-none cursor-pointer pr-8 py-2 pl-2"
+              >
+                {["Kannada", "Tamil", "Telugu", "Malayalam", "Bodo", "English", "Meitei (Manipuri)", "Odia", "Marathi", "Punjabi", "Gujarati", "Bengali", "Hindi", "Assamese", "Rajasthani", "Konkani"].map(lang => (
+                  <option key={lang} value={lang} className="bg-gray-800 text-white">{lang}</option>
+                ))}
+              </select>
+            </div>
           </div>
 
           {/* Chat messages section */}
-          <div className="flex-grow bg-gray-700 p-4 rounded-lg mb-4 overflow-y-auto max-h-[60vh] border border-gray-600">
+          <div className="flex-grow overflow-y-auto mb-6 pr-2 custom-scrollbar z-10">
             {messages.length === 0 ? (
-              <p className="text-gray-400 text-center">
-                Start the conversation...
-              </p>
+              <div className="flex flex-col items-center justify-center h-full text-center opacity-70">
+                <div className="w-20 h-20 mb-4 rounded-full bg-gradient-to-tr from-blue-500 to-purple-500 flex items-center justify-center shadow-lg">
+                  <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path></svg>
+                </div>
+                <h3 className="text-xl font-medium text-white mb-2">How can I assist you today?</h3>
+                <p className="text-gray-400 text-sm max-w-md">Ask questions, report issues, or use voice commands in your preferred language.</p>
+              </div>
             ) : (
-              <ul className="space-y-4">
+              <ul className="space-y-6">
                 {messages.map((message, index) => (
                   <li
                     key={index}
                     className={`flex ${
-                      message.sender === "user"
-                        ? "justify-end"
-                        : "justify-start"
+                      message.sender === "user" ? "justify-end" : "justify-start"
                     }`}
                   >
                     {message.sender === "bot" ? (
-                      <div
-                        className={`p-4 rounded-lg shadow-lg ${
+                      <div className="flex items-start max-w-[80%]">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center mr-3 mt-1 shadow-md">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        </div>
+                        <div className={`p-4 rounded-2xl rounded-tl-none shadow-sm backdrop-blur-md border ${
                           message.text.includes("Error")
-                            ? "bg-red-500 text-white"
-                            : "bg-gray-500 text-white"
-                        } max-w-md w-full`}
-                      >
-                        <div className="font-semibold text-lg">Bot:</div>
-                        <div className="mt-1 text-sm">
-                          <span className="text-white font-semibold">
-                            {message.text}
-                          </span>
+                            ? "bg-red-500/20 border-red-500/50 text-white"
+                            : "bg-white/10 border-white/10 text-gray-100"
+                        }`}>
+                          <div className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</div>
                         </div>
                       </div>
                     ) : (
-                      <div
-                        className={`p-3 rounded-lg shadow-sm ${
-                          message.sender === "user"
-                            ? "bg-blue-600 text-white"
-                            : "bg-gray-500 text-white"
-                        }`}
-                      >
-                        {message.text}
+                      <div className="flex items-start max-w-[80%] flex-row-reverse">
+                        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-white/20 flex items-center justify-center ml-3 mt-1 shadow-md backdrop-blur-sm">
+                          <svg className="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                        </div>
+                        <div className="p-4 rounded-2xl rounded-tr-none shadow-lg bg-gradient-to-br from-blue-500 to-purple-600 text-white">
+                          <div className="text-sm leading-relaxed whitespace-pre-wrap">{message.text}</div>
+                        </div>
                       </div>
                     )}
                   </li>
                 ))}
+                <div ref={endOfMessagesRef} className="h-4" />
               </ul>
             )}
-            {/* This div will be used to automatically scroll to the latest message */}
-            <div ref={endOfMessagesRef} />
           </div>
 
-          {/* Input and recording section fixed at the bottom */}
-          <div className="fixed bottom-0 left-0 w-full bg-gray-800 p-4">
-            <div className="flex items-center space-x-3 max-w-4xl mx-auto">
+          {/* Input section */}
+          <div className="mt-auto z-10 pt-2">
+            <div className="relative flex items-center p-2 bg-white/5 border border-white/20 rounded-2xl backdrop-blur-xl shadow-inner">
               <input
                 type="text"
-                className="flex-grow text-white p-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Type your message here..."
+                className="flex-grow text-white px-4 py-3 bg-transparent focus:outline-none placeholder-gray-400 text-sm sm:text-base"
+                placeholder="Type your message..."
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={(e) => e.key === "Enter" && handleSend()} // Send on Enter key
+                onKeyPress={(e) => e.key === "Enter" && handleSend()}
               />
-              <button
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-700 transition duration-300"
-                onClick={handleSend}
-              >
-                Send
-              </button>
-              <button
-                className={`px-6 py-3 rounded-lg shadow-md text-white transition duration-300 ${
-                  isRecording
-                    ? "bg-red-500 hover:bg-red-600"
-                    : "bg-green-500 hover:bg-green-600"
-                }`}
-                onClick={isRecording ? stopRecording : startRecording}
-              >
-                {isRecording ? "Stop Recording" : "Record Voice Note"}
-              </button>
+              
+              <div className="flex items-center space-x-2 pr-2">
+                {audioUrl && (
+                  <audio
+                    src={audioUrl}
+                    className="h-8 w-24 sm:w-32 opacity-70 hover:opacity-100 transition-opacity filter invert grayscale"
+                    controls
+                  />
+                )}
+                
+                <button
+                  onClick={isRecording ? stopRecording : startRecording}
+                  className={`p-3 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center ${
+                    isRecording
+                      ? "bg-red-500 hover:bg-red-600 animate-pulse"
+                      : "bg-white/10 hover:bg-white/20 text-gray-300"
+                  }`}
+                  title={isRecording ? "Stop Recording" : "Record Voice Note"}
+                >
+                  {isRecording ? (
+                    <svg className="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8 7a1 1 0 00-1 1v4a1 1 0 001 1h4a1 1 0 001-1V8a1 1 0 00-1-1H8z" clipRule="evenodd"></path></svg>
+                  ) : (
+                    <svg className="w-5 h-5 text-current" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"></path></svg>
+                  )}
+                </button>
+                
+                <button
+                  onClick={handleSend}
+                  disabled={!inputValue.trim()}
+                  className={`p-3 rounded-xl shadow-lg transition-all duration-300 flex items-center justify-center ${
+                    inputValue.trim()
+                      ? "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white cursor-pointer hover:scale-105"
+                      : "bg-white/5 text-gray-500 cursor-not-allowed"
+                  }`}
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"></path></svg>
+                </button>
+              </div>
             </div>
           </div>
+          
+          {/* Decorative background blurs */}
+          <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-blue-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+          <div className="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-purple-500/20 rounded-full blur-[100px] pointer-events-none"></div>
 
-          {/* Play back the recorded voice note */}
-          {audioUrl && (
-            <div className="mt-4">
-              <audio
-                controls
-                src={audioUrl}
-                className="rounded-lg shadow bg-gray-500"
-              />
-            </div>
-          )}
         </div>
       </div>
     </div>
